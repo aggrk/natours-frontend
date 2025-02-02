@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="relative h-[450px] w-full bg-[#2D6A4F] text-white">
+    <section className="relative h-[550px] w-full bg-[#2D6A4F] text-white">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: 'url("./img/tours/tour-1-cover.jpg")' }}

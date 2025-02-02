@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,39 +21,35 @@ export default function Header() {
     >
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
-        <a href="/" className="flex items-center text-2xl font-bold text-white">
+        <NavLink
+          to="/"
+          className="flex items-center text-2xl font-bold text-white"
+        >
           <img
-            src="./img/logo-green.png"
+            src="./img/favicon.png"
             alt="Natours Logo"
-            className="h-12 w-40 object-contain"
+            className="h-18 w-40 object-contain"
           />
-        </a>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden space-x-6 text-white md:flex">
-          <a href="#tours" className="hover:text-[#FFD166]">
-            Tours
-          </a>
-          <a href="#about" className="hover:text-[#FFD166]">
-            About
-          </a>
-          <a href="#contact" className="hover:text-[#FFD166]">
-            Contact
-          </a>
-        </nav>
+        </NavLink>
 
         {/* Auth Buttons */}
         <div className="hidden space-x-4 md:flex">
-          <button className="rounded-lg border border-white px-4 py-2 text-white transition hover:bg-white hover:text-[#2D6A4F]">
+          <NavLink
+            to="/signin"
+            className="rounded-lg border border-white px-4 py-2 text-white transition hover:bg-white hover:text-[#2D6A4F]"
+          >
             Sign In
-          </button>
-          <button className="rounded-lg bg-[#FFD166] px-4 py-2 text-black transition hover:bg-yellow-500">
+          </NavLink>
+          <NavLink
+            to="/signup"
+            className="rounded-lg bg-[#FFD166] px-4 py-2 text-black transition hover:bg-yellow-500"
+          >
             Sign Up
-          </button>
+          </NavLink>
         </div>
 
         {/* Mobile Menu Button */}
-        <button className="text-white focus:outline-none md:hidden">
+        <button className="text-white focus:outline-none sm:hidden md:hidden">
           <svg
             className="h-6 w-6"
             fill="none"

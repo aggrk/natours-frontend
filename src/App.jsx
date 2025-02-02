@@ -1,35 +1,21 @@
-// import { BrowserRouter, Route, Routes } from "react-router";
-import { useEffect, useState } from "react";
-import Header from "./layouts/Header";
-import Main from "./components/Main";
-import { useQueryClient } from "@tanstack/react-query";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AppLayout from "./layouts/AppLayout";
+import Tours from "./pages/Tours/Tours";
+import Signin from "./pages/Users/Signin";
+import Signup from "./pages/Users/Signup";
 
 export default function App() {
-  // const [tours, setTours] = useState([]);
-  // const [error, setError] = useState("");
-
-  // useEffect(() => {
-  //   async function fetchTours() {
-  //     try {
-  //       const res = await fetch("http://127.0.0.1:3000/api/v1/tours");
-  //       const data = await res.json();
-  //       console.log(data);
-  //     } catch (err) {
-  //       setError(err);
-  //     }
-  //   }
-  //   fetchTours();
-  // }, []);
-
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="" element={<Header />} />
-    //   </Routes>
-    // </BrowserRouter>
-    <>
-      <Header />
-      <Main />
-    </>
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Tours />} />
+        </Route>
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
