@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { signinUser } from "../../utils/apiTours";
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function Signin({ setIsAuthenticated }) {
+export default function Signin() {
   const {
     register,
     handleSubmit,
@@ -12,17 +14,22 @@ export default function Signin({ setIsAuthenticated }) {
     reset,
   } = useForm();
 
+  const { setIsAuth } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const mutation = useMutation({
+    mutationKey: ["login"],
     mutationFn: signinUser,
-    onSuccess: () => {
-      toast.success("Logged in successfully");
-      setIsAuthenticated(true);
-      navigate("/dashboard");
+    onSuccess: (data) => {
+      if (data.status === "success") {
+        toast.success("Logged in successfully");
+        setIsAuth(true);
+        navigate("/dashboard");
+      }
       reset();
     },
-    onError: (err) => toast.error(err),
+    onError: (err) => toast.error(err.message),
   });
 
   function onSubmit(data) {

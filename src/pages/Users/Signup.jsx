@@ -1,10 +1,10 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { signupUser } from "../../utils/apiTours";
 import toast from "react-hot-toast";
 
-export default function Signup({ setIsAuthenticated }) {
+export default function Signup() {
   const {
     register,
     handleSubmit,
@@ -13,17 +13,13 @@ export default function Signup({ setIsAuthenticated }) {
     reset,
   } = useForm();
 
-  const navigate = useNavigate();
-
   const mutation = useMutation({
     mutationFn: signupUser,
     onSuccess: () => {
-      toast.success("Account created succesfully!");
-      setIsAuthenticated(true);
-      navigate("/dashboard");
+      toast.success("Signedup successfully!");
       reset();
     },
-    onError: (err) => toast.error(err),
+    onError: (err) => toast.error(err.message),
   });
 
   const password = watch("password");
@@ -133,15 +129,8 @@ export default function Signup({ setIsAuthenticated }) {
           )}
         </div>
         <div className="mt-8">
-          <button
-            className={`w-full rounded-full py-2 text-xl transition ${
-              mutation.isPending
-                ? "cursor-not-allowed bg-gray-400" // Disabled state
-                : "cursor-pointer bg-[#FFD166] hover:bg-yellow-500" // Active state
-            }`}
-            disabled={mutation.isPending}
-          >
-            {mutation.isPending ? "Signingup..." : "Signup"}
+          <button className="w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500">
+            Signup
           </button>
         </div>
         <div className="mt-5">

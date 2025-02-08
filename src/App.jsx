@@ -4,34 +4,36 @@ import Tours from "./pages/Tours/Tours";
 import Signin from "./pages/Users/Signin";
 import Signup from "./pages/Users/Signup";
 import { Toaster } from "react-hot-toast";
-import { useState } from "react";
 import ProtectedRoutes from "./pages/Users/ProtectedRoutes";
-import Dashboard from "./pages/Dashboard";
+import DashTours from "./Dashboard/DashTours";
+import Dashboard from "./Dashboard/Dashboard";
+import Settings from "./Dashboard/Settings";
+import Inbox from "./Dashboard/Inbox";
+import Profile from "./Dashboard/Profile";
+import Bookings from "./Dashboard/Bookings";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Tours />} />
         </Route>
-        <Route
-          path="signin"
-          element={<Signin setIsAuthenticated={setIsAuthenticated} />}
-        />
-        <Route
-          path="signup"
-          element={<Signup setIsAuthenticated={setIsAuthenticated} />}
-        />
-        <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
-          <Route path="dashboard" element={<Dashboard />} />
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="dashboard" element={<Dashboard />}>
+            <Route path="tours" element={<DashTours />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="inbox" element={<Inbox />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="bookings" element={<Bookings />} />
+          </Route>
         </Route>
       </Routes>
       <Toaster
         position="top-center"
-        toastOptions={{ duration: 10000, style: { width: "400px" } }}
+        toastOptions={{ duration: 5000, style: { width: "400px" } }}
       />
     </BrowserRouter>
   );
