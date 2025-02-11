@@ -1,9 +1,15 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { FaCalendar } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { NavLink } from "react-router-dom";
 
 export default function Tour({ item }) {
+  const queryClient = useQueryClient();
+  const handleInvalidate = () => {
+    queryClient.invalidateQueries(["tour", item._id]);
+  };
   return (
     <div className="flex h-[550px] max-w-sm transform flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:scale-105">
       <img
@@ -53,9 +59,13 @@ export default function Tour({ item }) {
             ⭐ {item.ratingsAverage} ({item.ratingsQuantity})
           </p>
         </div>
-        <button className="rounded-full bg-[#FFD166] px-6 py-2 text-black transition hover:bg-yellow-500">
+        <NavLink
+          to={`tours/${item._id}`}
+          className="cursor-pointer rounded-full bg-[#FFD166] px-6 py-2 text-black transition hover:bg-yellow-500"
+          onClick={handleInvalidate}
+        >
           Details
-        </button>
+        </NavLink>
       </div>
     </div>
   );

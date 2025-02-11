@@ -9,6 +9,6 @@ export default function DashTours() {
     queryKey: ["tours"],
   });
 
-  if (isPending) return <Spinner />;
+  if (isPending) return <Spinner size="h-16 w-16" screen="min-h-screen" />;
   return <ToursSection tours={tours} />;
 }

@@ -1,10 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { signinUser } from "../../utils/apiTours";
 import toast from "react-hot-toast";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import Spinner from "../../components/Spinner";
 
 export default function Signin() {
   const {
@@ -13,6 +14,9 @@ export default function Signin() {
     formState: { errors },
     reset,
   } = useForm();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const { setIsAuth } = useContext(AuthContext);
 
@@ -23,16 +27,23 @@ export default function Signin() {
     mutationFn: signinUser,
     onSuccess: (data) => {
       if (data.status === "success") {
+        queryClient.invalidateQueries(["user"]);
         toast.success("Logged in successfully");
+        setIsLoading(false);
         setIsAuth(true);
         navigate("/dashboard");
       }
       reset();
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err) => {
+      setIsLoading(false);
+      toast.error(err.message);
+    },
   });
 
   function onSubmit(data) {
+    setIsLoading(true);
+    queryClient.removeQueries(["user"]);
     mutation.mutate({
       email: data.email,
       password: data.password,
@@ -83,14 +94,18 @@ export default function Signin() {
           )}
         </div>
         <div className="mt-8">
-          <button className="w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500">
-            Signin
+          <button
+            className={`w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500 ${isLoading ? "disabled:cursor-not-allowed disabled:opacity-50" : ""}`}
+          >
+            {isLoading ? <Spinner size="w-8 h-8" /> : "Signin"}
           </button>
         </div>
         <div className="mt-5">
           <p className="px-2 text-lg">
             Forgot Password?{" "}
-            <NavLink className="text-[#2D6A4F]">Reset here</NavLink>
+            <NavLink to="/reset" className="text-[#2D6A4F]">
+              Reset here
+            </NavLink>
           </p>
           <p className="px-2 py-2 text-lg">
             Don&apos;t have an account?{" "}

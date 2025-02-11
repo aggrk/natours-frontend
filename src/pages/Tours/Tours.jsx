@@ -14,7 +14,7 @@ export default function Tours() {
     queryFn: getTours,
   });
 
-  if (isPending) return <Spinner />;
+  if (isPending) return <Spinner size="h-16 w-16" screen="min-h-screen" />;
 
   return (
     <>

@@ -1,10 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { signupUser } from "../../utils/apiTours";
 import toast from "react-hot-toast";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import Spinner from "../../components/Spinner";
 
 export default function Signup() {
+  const { setIsAuth } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -12,19 +16,31 @@ export default function Signup() {
     formState: { errors },
     reset,
   } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: signupUser,
-    onSuccess: () => {
-      toast.success("Signedup successfully!");
-      reset();
+    onSuccess: (data) => {
+      if (data.status === "success") {
+        toast.success("Signedup successfully!");
+        setIsLoading(false);
+        setIsAuth(true);
+        navigate("/dashboard");
+        reset();
+      }
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err) => {
+      setIsLoading(false);
+      toast.error(err.message);
+    },
   });
 
   const password = watch("password");
 
   function onSubmit(data) {
+    setIsLoading(true);
     mutation.mutate({
       name: data.name,
       email: data.email,
@@ -129,8 +145,10 @@ export default function Signup() {
           )}
         </div>
         <div className="mt-8">
-          <button className="w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500">
-            Signup
+          <button
+            className={`w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500 ${isLoading ? "disabled:cursor-not-allowed disabled:opacity-50" : ""}`}
+          >
+            {isLoading ? <Spinner size="w-8 h-8" /> : "Signup"}
           </button>
         </div>
         <div className="mt-5">

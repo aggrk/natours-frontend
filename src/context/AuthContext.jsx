@@ -25,11 +25,15 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    checkAuth();
-  }, []);
+    if (isAuth === null) {
+      checkAuth();
+    }
+  }, [isAuth]);
 
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth, isLoading }}>
+    <AuthContext.Provider
+      value={{ isAuth, setIsAuth, isLoading, setIsLoading }}
+    >
       {!isLoading && children}
     </AuthContext.Provider>
   );

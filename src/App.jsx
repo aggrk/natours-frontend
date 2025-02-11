@@ -11,6 +11,9 @@ import Settings from "./Dashboard/Settings";
 import Inbox from "./Dashboard/Inbox";
 import Profile from "./Dashboard/Profile";
 import Bookings from "./Dashboard/Bookings";
+import ResetLink from "./pages/Users/ResetLink";
+import UpdatePassword from "./pages/Users/UpdatePassword";
+import TourDetails from "./pages/Tours/TourDetails";
 
 export default function App() {
   return (
@@ -21,9 +24,12 @@ export default function App() {
         </Route>
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="reset" element={<ResetLink />} />
+        <Route path="resetPassword/:token" element={<UpdatePassword />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="dashboard" element={<Dashboard />}>
             <Route path="tours" element={<DashTours />} />
+            <Route path="tours/:id" element={<TourDetails />} />
             <Route path="settings" element={<Settings />} />
             <Route path="inbox" element={<Inbox />} />
             <Route path="profile" element={<Profile />} />
