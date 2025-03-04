@@ -1,34 +1,32 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { signupUser } from "../../utils/apiTours";
 import toast from "react-hot-toast";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import Spinner from "../../components/Spinner";
+import CustomForm from "../../components/CustomForm";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 
 export default function Signup() {
-  const { setIsAuth } = useContext(AuthContext);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    reset,
-  } = useForm();
   const [isLoading, setIsLoading] = useState(false);
-
+  const { setIsAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    watch,
+  } = useForm();
 
   const mutation = useMutation({
     mutationFn: signupUser,
     onSuccess: (data) => {
       if (data.status === "success") {
-        toast.success("Signedup successfully!");
+        toast.success("Signed up successfully!");
         setIsLoading(false);
         setIsAuth(true);
-        navigate("/dashboard");
-        reset();
+        navigate("/dashboard/profile");
       }
     },
     onError: (err) => {
@@ -37,9 +35,7 @@ export default function Signup() {
     },
   });
 
-  const password = watch("password");
-
-  function onSubmit(data) {
+  const onSubmit = (data) => {
     setIsLoading(true);
     mutation.mutate({
       name: data.name,
@@ -47,119 +43,92 @@ export default function Signup() {
       password: data.password,
       passwordConfirm: data.passwordConfirm,
     });
-  }
+  };
+
+  const fields = [
+    {
+      name: "name",
+      type: "text",
+      label: "Full Name",
+      placeholder: "Aggr Kennedy",
+      icon: FaUser,
+      validation: {
+        required: "Name is required",
+        pattern: {
+          value: /^[A-Za-z]+(?: [A-Za-z]+)*$/i,
+          message: "Only letters are allowed",
+        },
+      },
+    },
+    {
+      name: "email",
+      type: "email",
+      label: "Email",
+      placeholder: "aggr@example.com",
+      icon: FaEnvelope,
+      validation: {
+        required: "Email is required",
+        pattern: {
+          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+          message: "Invalid email address",
+        },
+      },
+    },
+    {
+      name: "password",
+      type: "password",
+      label: "Password",
+      placeholder: "••••••••",
+      icon: FaLock,
+      validation: {
+        required: "Password is required",
+        minLength: {
+          value: 8,
+          message: "Password must be at least 8 characters",
+        },
+        pattern: {
+          value:
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          message:
+            "Password must contain uppercase, lowercase, number, and special character",
+        },
+      },
+    },
+    {
+      name: "passwordConfirm",
+      type: "password",
+      label: "Confirm Password",
+      placeholder: "••••••••",
+      icon: FaLock,
+      validation: {
+        required: "Confirm your password",
+        validate: (value) =>
+          value === watch("password") || "Passwords do not match",
+      },
+    },
+  ];
+
+  const bottomLinks = [
+    {
+      text: "Already have an account?",
+      to: "/signin",
+      label: "Sign In",
+    },
+  ];
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#D8F3DC]">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="h-auto w-[90%] max-w-[450px] rounded-2xl bg-white px-8 py-4 shadow-md sm:max-w-[500px]"
-      >
-        <h3 className="text-center text-2xl font-semibold">Signup</h3>
-        <div className="mt-5 flex flex-col gap-2">
-          <label htmlFor="" className="text-xl text-[#1B4442]">
-            Name
-          </label>
-          <input
-            type="text"
-            placeholder="Enter your full name"
-            className="rounded-full border-2 border-[#2D6A4F] px-4 py-2 outline-0 focus:ring-2 focus:ring-[#1B4442]"
-            {...register("name", {
-              required: "Please Enter your name",
-              pattern: {
-                value: /^[A-Za-z]+(?: [A-Za-z]+)*$/i,
-                message: "Only letters are allowed!",
-              },
-            })}
-          />
-          {errors.name && (
-            <p className="px-2 text-lg text-red-500">{errors.name.message}</p>
-          )}
-        </div>
-        <div className="mt-5 flex flex-col gap-2">
-          <label htmlFor="" className="text-xl text-[#1B4442]">
-            Email
-          </label>
-          <input
-            type="text"
-            placeholder="Enter your Email"
-            className="rounded-full border-2 border-[#2D6A4F] px-4 py-2 outline-0 focus:ring-2 focus:ring-[#1B4442]"
-            {...register("email", {
-              required: "Email is required!",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "Enter a valid email address",
-              },
-            })}
-          />
-          {errors.email && (
-            <p className="px-2 text-lg text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="mt-5 flex flex-col gap-4">
-          <label htmlFor="" className="text-xl text-[#1B4442]">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="Enter password"
-            className="rounded-full border-2 border-[#2D6A4F] px-4 py-2 outline-0 focus:ring-2 focus:ring-[#1B4442]"
-            {...register("password", {
-              required: "Password is required!",
-              min: {
-                value: 8,
-                message: "Password must have more than 8 characters",
-              },
-              pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message:
-                  "Password must contain uppercase, lowercase, number, and special character",
-              },
-            })}
-          />
-          {errors.password && (
-            <p className="px-2 text-lg text-red-500">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-        <div className="mt-5 flex flex-col gap-4">
-          <label htmlFor="" className="text-xl text-[#1B4442]">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="rounded-full border-2 border-[#2D6A4F] px-4 py-2 outline-0 focus:ring-2 focus:ring-[#1B4442]"
-            {...register("passwordConfirm", {
-              required: "You must confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-          />
-          {errors.passwordConfirm && (
-            <p className="px-2 text-lg text-red-500">
-              {errors.passwordConfirm.message}
-            </p>
-          )}
-        </div>
-        <div className="mt-8">
-          <button
-            className={`w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500 ${isLoading ? "disabled:cursor-not-allowed disabled:opacity-50" : ""}`}
-          >
-            {isLoading ? <Spinner size="w-8 h-8" /> : "Signup"}
-          </button>
-        </div>
-        <div className="mt-5">
-          <p className="px-2 text-base sm:text-lg">
-            Already have an account?{" "}
-            <NavLink to="/signin" className="text-[#2D6A4F]">
-              Signin
-            </NavLink>
-          </p>
-        </div>
-      </form>
-    </div>
+    <CustomForm
+      title="Create Account"
+      subtitle="Start your adventure with us"
+      fields={fields}
+      onSubmit={onSubmit}
+      isLoading={isLoading}
+      submitButtonText="Sign Up"
+      bottomLinks={bottomLinks}
+      watch={watch}
+      handleSubmit={handleSubmit}
+      errors={errors}
+      register={register}
+    />
   );
 }

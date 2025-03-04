@@ -17,14 +17,16 @@ export default function Header() {
   return (
     <header
       className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ${
-        scrolled ? "bg-[#1B4332] shadow-lg" : "bg-[#2D6A4F]"
+        scrolled
+          ? "bg-[#1B4332]/95 shadow-lg backdrop-blur-sm"
+          : "bg-gradient-to-b from-[#2D6A4F] to-[#1B4332]"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo */}
         <NavLink
           to="/"
-          className="flex items-center text-2xl font-bold text-white"
+          className="flex items-center text-2xl font-bold text-white transition-transform hover:scale-105"
         >
           <img
             src="./img/favicon.png"
@@ -37,13 +39,13 @@ export default function Header() {
         <div className="hidden space-x-4 md:flex">
           <NavLink
             to="/signin"
-            className="rounded-lg border border-white px-4 py-2 text-white transition hover:bg-white hover:text-[#2D6A4F]"
+            className="rounded-lg border-2 border-white/50 px-6 py-2 text-white transition-all hover:border-white hover:bg-white/10 hover:shadow-md"
           >
             Sign In
           </NavLink>
           <NavLink
             to="/signup"
-            className="rounded-lg bg-[#FFD166] px-4 py-2 text-black transition hover:bg-yellow-500"
+            className="rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-6 py-2 font-semibold text-black transition-all hover:from-[#FFB700] hover:to-[#FFD166] hover:shadow-md"
           >
             Sign Up
           </NavLink>
@@ -55,7 +57,7 @@ export default function Header() {
           className="cursor-pointer text-white focus:outline-none sm:hidden md:hidden"
         >
           <svg
-            className="h-6 w-6"
+            className="h-8 w-8 transition-transform hover:scale-110"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -70,25 +72,27 @@ export default function Header() {
         </button>
       </div>
 
+      {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-50 bg-white bg-opacity-50 transition-opacity ${
+        className={`fixed inset-0 z-50 bg-black/50 transition-opacity ${
           isOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
         onClick={() => setIsOpen(false)} // Close when clicking outside
       ></div>
 
+      {/* Mobile Menu */}
       <div
-        className={`fixed right-0 top-0 z-50 h-full w-64 bg-[#2D6A4F] p-5 shadow-lg transition-transform ${
+        className={`fixed right-0 top-0 z-50 h-full w-64 bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] p-6 shadow-lg transition-transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Close Button */}
         <button
           onClick={() => setIsOpen(false)}
-          className="mb-4 flex cursor-pointer items-center text-white focus:outline-none"
+          className="mb-6 flex cursor-pointer items-center text-white focus:outline-none"
         >
           <svg
-            className="h-6 w-6"
+            className="h-6 w-6 transition-transform hover:scale-110"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -100,21 +104,21 @@ export default function Header() {
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-          <span className="ml-2">Close</span>
+          <span className="ml-2 text-lg">Close</span>
         </button>
 
         {/* Mobile Navigation Links */}
         <nav className="flex flex-col space-y-4">
           <NavLink
             to="/signin"
-            className="rounded-lg border border-white px-4 py-2 text-white transition hover:bg-white hover:text-[#2D6A4F]"
+            className="rounded-lg border-2 border-white/50 px-6 py-2 text-center text-white transition-all hover:border-white hover:bg-white/10 hover:shadow-md"
             onClick={() => setIsOpen(false)}
           >
             Sign In
           </NavLink>
           <NavLink
             to="/signup"
-            className="rounded-lg bg-[#FFD166] px-4 py-2 text-black transition hover:bg-yellow-500"
+            className="rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-6 py-2 text-center font-semibold text-black transition-all hover:from-[#FFB700] hover:to-[#FFD166] hover:shadow-md"
             onClick={() => setIsOpen(false)}
           >
             Sign Up

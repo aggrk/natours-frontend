@@ -20,7 +20,7 @@ export default function Footer() {
             <li className="cursor-pointer hover:text-green-600">Contact</li>
           </ul>
           <p className="mt-5 text-sm text-gray-400 sm:mt-0">
-            &copy; 2025 Kennedy Tungaraza
+            &copy; 2025 Kennedy Phinias
           </p>
         </div>
       </div>

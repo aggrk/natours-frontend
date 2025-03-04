@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://127.0.0.1:3000/api/v1";
+const API_BASE_URL = "https://natours-api-chd9.onrender.com/api/v1";
 
 // Fetch tours
 export async function getTours() {
@@ -118,7 +118,7 @@ export async function getTour(id) {
     return res.data;
   } catch (err) {
     const errMessage = err?.response?.data.message;
-    console(errMessage);
+    console.log(errMessage);
     throw new Error(errMessage);
   }
 }
@@ -132,7 +132,50 @@ export async function updateUser(data) {
     return res.data;
   } catch (err) {
     const errMessage = err?.response?.data.message;
-    console(errMessage);
+    console.log(errMessage);
+    throw new Error(errMessage);
+  }
+}
+
+export async function createFavorite(tour) {
+  try {
+    const res = await axios.post(`${API_BASE_URL}/favorites`, tour, {
+      withCredentials: true,
+    });
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    const errMessage = err?.response?.data.message;
+    console.log(errMessage);
+    throw new Error(errMessage);
+  }
+}
+
+export async function getFavorites() {
+  try {
+    const res = await axios.get(`${API_BASE_URL}/favorites`, {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err?.response?.data.message);
+    const errMessage =
+      err?.response?.data.message || "Failed to fetch user data";
+    throw new Error(errMessage);
+  }
+}
+
+export async function removeFavorite(id) {
+  try {
+    const res = await axios.delete(`${API_BASE_URL}/favorites/${id}`, {
+      withCredentials: true,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.log(err?.response?.data.message);
+    const errMessage =
+      err?.response?.data.message || "Failed to fetch user data";
     throw new Error(errMessage);
   }
 }
