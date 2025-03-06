@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
   FaUserCircle,
   FaGlobeAmericas,
@@ -9,20 +9,19 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import SidebarLink from "./SidebarLink";
-import { Outlet, useNavigate } from "react-router-dom";
-import { logoutUser, updateUser } from "../utils/apiTours";
-import { AuthContext } from "../context/AuthContext";
+import { Outlet } from "react-router-dom";
+import { updateUser } from "../utils/apiTours";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import useLogout from "../utils/useLogout";
 
 export default function Layout({ user }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const { setIsAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
+  const handleLogout = useLogout();
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -55,20 +54,20 @@ export default function Layout({ user }) {
     mutation.mutate(formData);
   }
 
-  async function handleLogout() {
-    try {
-      const res = await logoutUser();
-      if (res.status === "success") {
-        setIsAuth(false);
-        navigate("/signin");
-        setIsSidebarOpen(false);
-      }
-      return res;
-    } catch (err) {
-      console.log(err);
-      toast.error("Failed to logout");
-    }
-  }
+  // async function handleLogout() {
+  //   try {
+  //     const res = await logoutUser();
+  //     if (res.status === "success") {
+  //       setIsAuth(false);
+  //       navigate("/signin");
+  //       setIsSidebarOpen(false);
+  //     }
+  //     return res;
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error("Failed to logout");
+  //   }
+  // }
 
   return (
     <div className="relative flex min-h-screen">

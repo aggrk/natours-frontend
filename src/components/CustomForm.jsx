@@ -1,7 +1,7 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Spinner from "./Spinner";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import CustomButton from "./CustomButton";
 
 export default function CustomForm({
   title,
@@ -11,7 +11,6 @@ export default function CustomForm({
   isLoading,
   submitButtonText = "Submit",
   bottomLinks,
-  watch,
   register,
   errors,
   handleSubmit,
@@ -69,9 +68,6 @@ export default function CustomForm({
                   } py-3 pr-12 text-gray-900 transition-all focus:border-[#2D6A4F] focus:ring-2 focus:ring-[#2D6A4F]/50`}
                   {...register(field.name, {
                     ...field.validation,
-                    validate: field.validation.validate
-                      ? (value) => field.validation.validate(value, watch)
-                      : undefined,
                   })}
                 />
 
@@ -102,20 +98,10 @@ export default function CustomForm({
           ))}
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2D6A4F] to-[#1B4442] px-6 py-3.5 text-lg font-semibold text-white transition-all hover:from-[#1B4442] hover:to-[#2D6A4F] hover:shadow-md disabled:opacity-70"
-          >
-            {isLoading ? (
-              <>
-                <Spinner size="w-5 h-5" />
-                <span>Loading...</span>
-              </>
-            ) : (
-              submitButtonText
-            )}
-          </button>
+          <CustomButton
+            submitButtonText={submitButtonText}
+            isLoading={isLoading}
+          />
 
           {/* Bottom Links (if provided) */}
           {bottomLinks && (

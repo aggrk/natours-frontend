@@ -4,7 +4,8 @@ import { updatePassword } from "../../utils/apiTours";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import Spinner from "../../components/Spinner";
+import CustomForm from "../../components/CustomForm";
+import { FaLock } from "react-icons/fa";
 
 export default function UpdatePassword() {
   const {
@@ -41,68 +42,52 @@ export default function UpdatePassword() {
     });
   }
 
-  const password = watch("password");
+  const fields = [
+    {
+      name: "password",
+      type: "password",
+      label: "Password",
+      placeholder: "••••••••",
+      icon: FaLock,
+      validation: {
+        required: "Password is required",
+        minLength: {
+          value: 8,
+          message: "Password must be at least 8 characters",
+        },
+        pattern: {
+          value:
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          message:
+            "Password must contain uppercase, lowercase, number, and special character",
+        },
+      },
+    },
+    {
+      name: "passwordConfirm",
+      type: "password",
+      label: "Password",
+      placeholder: "••••••••",
+      icon: FaLock,
+      validation: {
+        required: "Confirm Password is required",
+        validate: (value) =>
+          value === watch("password") || "Passwords do not match",
+      },
+    },
+  ];
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#D8F3DC]">
-      <form
-        className="h-auto w-[90%] max-w-[400px] rounded-2xl bg-white px-8 py-4 shadow-md"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <h3 className="text-center text-2xl font-semibold">Update Password</h3>
-
-        <div className="mt-5 flex flex-col gap-4">
-          <label htmlFor="" className="text-xl text-[#1B4442]">
-            Password
-          </label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            className="rounded-full border-2 border-[#2D6A4F] px-4 py-2 outline-0 focus:ring-2 focus:ring-[#1B4442]"
-            {...register("password", {
-              required: "Password must be filled",
-              pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message:
-                  "Password must contain uppercase, lowercase, number, and special character",
-              },
-            })}
-          />
-          {errors.password && (
-            <p className="px-2 text-lg text-red-500">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-        <div className="mt-5 flex flex-col gap-4">
-          <label htmlFor="" className="text-xl text-[#1B4442]">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="rounded-full border-2 border-[#2D6A4F] px-4 py-2 outline-0 focus:ring-2 focus:ring-[#1B4442]"
-            {...register("passwordConfirm", {
-              required: "You must confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
-            })}
-          />
-          {errors.passwordConfirm && (
-            <p className="px-2 text-lg text-red-500">
-              {errors.passwordConfirm.message}
-            </p>
-          )}
-        </div>
-        <div className="mb-8 mt-8">
-          <button
-            className={`w-full cursor-pointer rounded-full bg-[#FFD166] py-2 text-xl transition hover:bg-yellow-500 ${isLoading ? "disabled:cursor-not-allowed disabled:opacity-50" : ""}`}
-          >
-            {isLoading ? <Spinner size="w-8 h-8" /> : "Update"}
-          </button>
-        </div>
-      </form>
-    </div>
+    <CustomForm
+      title="Update Password"
+      subtitle="Update password here"
+      fields={fields}
+      onSubmit={onSubmit}
+      isLoading={isLoading}
+      submitButtonText="Update Password"
+      register={register}
+      errors={errors}
+      handleSubmit={handleSubmit}
+    />
   );
 }

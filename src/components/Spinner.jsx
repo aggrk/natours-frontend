@@ -1,4 +1,4 @@
-export default function Spinner({ size, screen }) {
+export default function Spinner({ size = "w-8 h-8", screen }) {
   return (
     <div className={`${screen} flex items-center justify-center`}>
       <div

@@ -26,6 +26,7 @@ export default function Tour({ item }) {
     onSuccess: () => {
       toast.success("Tour added to favorites");
       queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      queryClient.invalidateQueries({ queryKey: ["activities"] });
     },
     onError: (err) =>
       toast.error(err.message || "Could not add tour to favorites"),
@@ -37,6 +38,7 @@ export default function Tour({ item }) {
     onSuccess: () => {
       toast.success("Tour removed from favorites");
       queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      queryClient.invalidateQueries({ queryKey: ["activities"] });
     },
     onError: (err) =>
       toast.error(err.message || "Could not remove tour from favorites"),
@@ -62,7 +64,7 @@ export default function Tour({ item }) {
   return (
     <div className="flex h-[550px] max-w-sm transform flex-col overflow-hidden rounded-lg bg-white shadow-md transition-all duration-300 hover:scale-105">
       <img
-        src={`/img/tours/${item.imageCover}`}
+        src={`https://natours-api-chd9.onrender.com/img/tours/${item.imageCover}`}
         alt="tour"
         className="h-48 w-full object-cover"
       />
