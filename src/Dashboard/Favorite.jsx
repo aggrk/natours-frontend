@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"; // Optional: npm install framer-motion
+import { motion } from "framer-motion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFavorites, removeFavorite } from "../utils/apiTours";
 import toast from "react-hot-toast";

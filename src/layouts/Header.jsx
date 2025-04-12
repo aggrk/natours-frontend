@@ -18,68 +18,52 @@ export default function Header() {
     <header
       className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-[#1B4332]/95 shadow-lg backdrop-blur-sm"
+          ? "bg-[#1B4332]/95 shadow-lg"
           : "bg-gradient-to-b from-[#2D6A4F] to-[#1B4332]"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between p-4">
-        {/* Logo */}
-        <NavLink
-          to="/"
-          className="flex items-center text-2xl font-bold text-white transition-transform hover:scale-105"
-        >
-          <img
-            src="./img/favicon.png"
-            alt="Natours Logo"
-            className="h-18 w-40 object-contain"
-          />
-        </NavLink>
-
-        {/* Auth Buttons */}
-        <div className="hidden space-x-4 md:flex">
-          <NavLink
-            to="/signin"
-            className="rounded-lg border-2 border-white/50 px-6 py-2 text-white transition-all hover:border-white hover:bg-white/10 hover:shadow-md"
-          >
-            Sign In
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className="rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-6 py-2 font-semibold text-black transition-all hover:from-[#FFB700] hover:to-[#FFD166] hover:shadow-md"
-          >
-            Sign Up
-          </NavLink>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(true)}
-          className="cursor-pointer text-white focus:outline-none sm:hidden md:hidden"
-        >
-          <svg
-            className="h-8 w-8 transition-transform hover:scale-110"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4 6h16M4 12h16m-7 6h7"
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between md:h-20">
+          {/* Logo - responsive sizing */}
+          <NavLink to="/" className="flex-shrink-0">
+            <img
+              src="./img/favicon.png"
+              alt="Natours Logo"
+              className="h-10 w-auto md:h-12"
             />
-          </svg>
-        </button>
+          </NavLink>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-6">
+            <NavLink
+              to="/signin"
+              className="rounded-lg px-3 py-1.5 text-sm text-white md:px-4 md:py-2 md:text-base"
+            >
+              Sign In
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className="rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-3 py-1.5 text-sm font-medium text-gray-900 md:px-4 md:py-2 md:text-base"
+            >
+              Sign Up
+            </NavLink>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="p-1 text-white md:hidden"
+            onClick={() => setIsOpen(true)}
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path
+                stroke="currentColor"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 z-50 bg-black/50 transition-opacity ${
-          isOpen ? "visible opacity-100" : "invisible opacity-0"
-        }`}
-        onClick={() => setIsOpen(false)} // Close when clicking outside
-      ></div>
-
       {/* Mobile Menu */}
       <div
         className={`fixed right-0 top-0 z-50 h-full w-64 bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] p-6 shadow-lg transition-transform ${

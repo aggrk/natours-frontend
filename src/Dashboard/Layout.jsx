@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useLogout from "../utils/useLogout";
+import { URL } from "../utils/urls";
 
 export default function Layout({ user }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -25,13 +26,13 @@ export default function Layout({ user }) {
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: (formData) => updateUser(formData), // Ensure updateUser accepts formData
+    mutationFn: (formData) => updateUser(formData),
     onSuccess: () => {
       toast.success("Photo uploaded successfully");
       queryClient.invalidateQueries(["user"]);
       setIsUploading(false);
       setSelectedFile(null);
-      reset(); // Reset form after successful upload
+      reset();
     },
     onError: (err) => {
       toast.error(err.message || "Failed to upload photo");
@@ -48,26 +49,9 @@ export default function Layout({ user }) {
     setIsUploading(true);
     const formData = new FormData();
     formData.append("photo", data.photo[0]);
-    // If your backend requires a user ID, uncomment and adjust:
-    // formData.append("userId", user.data.data.id);
 
     mutation.mutate(formData);
   }
-
-  // async function handleLogout() {
-  //   try {
-  //     const res = await logoutUser();
-  //     if (res.status === "success") {
-  //       setIsAuth(false);
-  //       navigate("/signin");
-  //       setIsSidebarOpen(false);
-  //     }
-  //     return res;
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error("Failed to logout");
-  //   }
-  // }
 
   return (
     <div className="relative flex min-h-screen">
@@ -76,8 +60,6 @@ export default function Layout({ user }) {
         className={`fixed left-0 top-0 z-20 h-screen w-[280px] border-r border-[#B7E4C7] bg-[#D8F3DC] shadow-lg transition-transform duration-300 md:w-[380px] md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="flex flex-col gap-6 p-6">
-          {/* User Profile */}
-          {/* User Profile */}
           {/* User Profile */}
           <div className="flex items-center">
             <div className="group relative">
@@ -108,7 +90,7 @@ export default function Layout({ user }) {
                     }
                   >
                     <img
-                      src={`http://127.0.0.1:3000/img/users/${user.data.data.photo}`}
+                      src={`${URL}/users/${user.data.data.photo}`}
                       alt="User Profile"
                       className="h-[60px] w-[60px] rounded-full border-2 border-gray-200 shadow-lg transition-all duration-300 hover:border-[#1B4332] hover:shadow-md md:h-[80px] md:w-[80px]"
                     />

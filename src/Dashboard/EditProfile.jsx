@@ -26,7 +26,6 @@ export default function EditProfile() {
   const handleEditProfile = () => setIsEditing(true);
   const onSubmit = (data) => {
     setIsSubmiting(true);
-    // Save profile logic here
     mutation.mutate({
       name: data.name,
       email: data.email,

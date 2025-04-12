@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion"; // Optional: npm install framer-motion
+import { motion } from "framer-motion";
 
 export default function Bookings() {
   const [bookings, setBookings] = useState([

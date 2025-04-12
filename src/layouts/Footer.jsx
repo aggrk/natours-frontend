@@ -1,27 +1,40 @@
+import { NavLink } from "react-router-dom";
+
 export default function Footer() {
   return (
-    <footer className="h-46 mt-auto flex w-full items-center border-t border-gray-300 bg-gray-100 px-6 sm:h-24">
-      <div className="container mx-auto mb-5 flex w-full flex-col items-center justify-center sm:mb-0 sm:flex-row sm:items-center sm:justify-between">
-        {/* Logo */}
-        <img
-          src="/img/logo-green.png"
-          alt="Natours Logo"
-          className="hidden h-10 w-32 sm:block"
-        />
+    <footer className="mt-auto w-full border-t border-gray-300 bg-gray-100 py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
+          {/* Logo - now visible on all screens */}
+          <NavLink to="/" className="flex-shrink-0">
+            <img
+              src="/img/logo-green.png"
+              alt="Natours Logo"
+              className="h-10 w-32 transition-opacity hover:opacity-90"
+            />
+          </NavLink>
 
-        {/* Links & Copyright */}
-        <div className="flex flex-col items-center justify-center text-gray-700 sm:items-end">
-          <ul className="mb-1 mt-8 flex flex-col items-center space-x-1 text-center text-lg sm:mt-0 sm:flex-row sm:space-x-6 sm:text-base">
-            <li className="cursor-pointer hover:text-green-600">About us</li>
-            <li className="cursor-pointer hover:text-green-600">
-              Become a guide
-            </li>
-            <li className="cursor-pointer hover:text-green-600">Careers</li>
-            <li className="cursor-pointer hover:text-green-600">Contact</li>
-          </ul>
-          <p className="mt-5 text-sm text-gray-400 sm:mt-0">
-            &copy; 2025 Kennedy Phinias
-          </p>
+          {/* Navigation Links */}
+          <nav className="flex flex-col items-center sm:items-end">
+            <ul className="flex flex-wrap justify-center gap-6 text-base font-medium text-gray-700">
+              {["About us", "Become a guide", "Careers", "Contact"].map(
+                (item) => (
+                  <li key={item}>
+                    <a
+                      href="#"
+                      className="transition-colors hover:text-green-600"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ),
+              )}
+            </ul>
+            <p className="mt-4 text-sm text-gray-500 sm:mt-2">
+              &copy; {new Date().getFullYear()} Kennedy Phinias. All rights
+              reserved.
+            </p>
+          </nav>
         </div>
       </div>
     </footer>

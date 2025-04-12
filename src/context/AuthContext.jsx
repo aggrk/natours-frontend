@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Cache the authentication state to avoid redundant API calls
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   async function checkAuth() {
@@ -24,16 +23,15 @@ export const AuthProvider = ({ children }) => {
       setIsAuth(false);
     } finally {
       setIsLoading(false);
-      setIsAuthChecked(true); // Mark authentication check as complete
+      setIsAuthChecked(true);
     }
   }
 
   useEffect(() => {
-    // Only run the check if authentication hasn't been checked yet
     if (!isAuthChecked) {
       checkAuth();
     }
-  }, [isAuthChecked]); // Dependency on isAuthChecked instead of isAuth
+  }, [isAuthChecked]);
 
   return (
     <AuthContext.Provider

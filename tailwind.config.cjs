@@ -9,13 +9,12 @@ module.exports = withMT({
       },
     },
     animation: {
-      "slide-up": "slideUp 0.8s ease-out",
-      bounce: "bounce 2s infinite",
+      float: "float 3s ease-in-out infinite",
     },
     keyframes: {
-      slideUp: {
-        "0%": { transform: "translateY(20px)", opacity: "0" },
-        "100%": { transform: "translateY(0)", opacity: "1" },
+      float: {
+        "0%, 100%": { transform: "translateY(0)" },
+        "50%": { transform: "translateY(-10px)" },
       },
     },
   },
