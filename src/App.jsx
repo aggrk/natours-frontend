@@ -26,10 +26,10 @@ export default function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="reset" element={<ResetLink />} />
         <Route path="resetPassword/:token" element={<UpdatePassword />} />
+        <Route path="tours/:id" element={<TourDetails />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="dashboard" element={<Dashboard />}>
             <Route path="tours" element={<DashTours />} />
-            <Route path="tours/:id" element={<TourDetails />} />
             <Route path="favorite" element={<Favorite />} />
             <Route path="inbox" element={<Inbox />} />
             <Route path="profile" element={<Profile />} />

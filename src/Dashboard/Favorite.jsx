@@ -3,8 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFavorites, removeFavorite } from "../utils/apiTours";
 import toast from "react-hot-toast";
 import Spinner from "../components/Spinner";
-
-const URL = "http://127.0.0.1:3000/img/tours";
+import { URL } from "../utils/urls";
 
 export default function Favourite() {
   const queryClient = useQueryClient();
@@ -69,7 +68,7 @@ export default function Favourite() {
                 className="overflow-hidden rounded-xl bg-white shadow-md transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 <img
-                  src={`${URL}/${item.tour.imageCover}`}
+                  src={`${URL}/tours/${item.tour.imageCover}`}
                   alt={item.tour.name}
                   className="h-48 w-full object-cover"
                 />

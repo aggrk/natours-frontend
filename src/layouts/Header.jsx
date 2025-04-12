@@ -65,49 +65,78 @@ export default function Header() {
         </div>
       </div>
       {/* Mobile Menu */}
+      {/* Mobile Menu */}
       <div
-        className={`fixed right-0 top-0 z-50 h-full w-64 bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] p-6 shadow-lg transition-transform ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-0 z-50 transition-all duration-300 ease-in-out ${
+          isOpen
+            ? "visible opacity-100"
+            : "pointer-events-none invisible opacity-0"
         }`}
       >
-        {/* Close Button */}
-        <button
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
-          className="mb-6 flex cursor-pointer items-center text-white focus:outline-none"
-        >
-          <svg
-            className="h-6 w-6 transition-transform hover:scale-110"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-          <span className="ml-2 text-lg">Close</span>
-        </button>
+          aria-hidden="true"
+        />
 
-        {/* Mobile Navigation Links */}
-        <nav className="flex flex-col space-y-4">
-          <NavLink
-            to="/signin"
-            className="rounded-lg border-2 border-white/50 px-6 py-2 text-center text-white transition-all hover:border-white hover:bg-white/10 hover:shadow-md"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign In
-          </NavLink>
-          <NavLink
-            to="/signup"
-            className="rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-6 py-2 text-center font-semibold text-black transition-all hover:from-[#FFB700] hover:to-[#FFD166] hover:shadow-md"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign Up
-          </NavLink>
-        </nav>
+        {/* Menu Panel */}
+        <div
+          className={`absolute right-0 top-0 h-full w-72 bg-gradient-to-b from-[#2D6A4F] to-[#1B4332] shadow-2xl transition-transform duration-300 ease-in-out ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* Close Button */}
+          <div className="flex items-center justify-between p-6">
+            <h2 className="text-xl font-bold text-white">Menu</h2>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="Close menu"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Navigation Links */}
+          <nav className="mt-6 flex flex-col space-y-3 px-6">
+            <NavLink
+              to="/signin"
+              className="flex items-center rounded-lg px-6 py-3 text-white transition-all hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
+              onClick={() => setIsOpen(false)}
+              activeClassName="bg-white/10 font-semibold"
+            >
+              <span className="flex-1 text-center">Sign In</span>
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className="flex items-center rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-6 py-3 font-semibold text-gray-900 transition-all hover:from-[#FFB700] hover:to-[#FFD166] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#FFD166]/50"
+              onClick={() => setIsOpen(false)}
+              activeClassName="from-[#FFB700] to-[#FFD166] shadow-md"
+            >
+              <span className="flex-1 text-center">Sign Up</span>
+            </NavLink>
+          </nav>
+
+          {/* Additional Menu Items (optional) */}
+          <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 p-6">
+            <p className="text-center text-sm text-white/80">
+              &copy; {new Date().getFullYear()} Natours
+            </p>
+          </div>
+        </div>
       </div>
     </header>
   );
