@@ -142,7 +142,7 @@ export default function Tour({ item }) {
           to={`tours/${item._id}`}
           className="rounded-lg bg-gradient-to-r from-[#FFD166] to-[#FFB700] px-3 py-1.5 text-xs font-medium text-gray-900 transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#FFB700]/50 sm:px-4 sm:py-2 sm:text-sm"
         >
-          Details
+          View Details
         </NavLink>
       </div>
     </div>
