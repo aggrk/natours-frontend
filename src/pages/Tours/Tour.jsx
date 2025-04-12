@@ -67,7 +67,7 @@ export default function Tour({ item }) {
   const isProcessing = addMutation.isPending || removeMutation.isPending;
 
   return (
-    <div className="flex h-full max-w-[340px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:hover:-translate-y-1.5">
+    <div className="flex h-full max-w-7xl flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:hover:-translate-y-1.5">
       {/* Image Section with Aspect Ratio */}
       <div className="relative aspect-[4/3]">
         <img
